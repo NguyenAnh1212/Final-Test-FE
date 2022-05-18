@@ -11,7 +11,7 @@ function showListCity(){
             for (let i = 0; i < data.length; i++) {
                 content += `<tr>
             <th scope="row">${data[i].id}</th>
-            <td><button onclick="showDetail(${data[i].id})" data-bs-toggle="modal" data-bs-target="#myModal2" >${data[i].name}</button></td>                      
+            <td><a onclick="showDetail(${data[i].id})" data-bs-toggle="modal" data-bs-target="#myModal2" >${data[i].name}</a></td>                      
             <td> ${data[i].nation.name} </td>
             <td><button type="button" onclick="showEditForm(${data[i].id})" data-bs-toggle="modal" data-bs-target="#myModal1">Update</button></td>           
             <td><button onclick="deleteCity(${data[i].id})">Delete</button></td> 
@@ -26,27 +26,28 @@ function showDetail(id) {
                     <form>
                         <div class="mb-3">
                             <label for="name2" class="form-label" >Name</label>
-                            <input type="text" class="form-control" id="name2">
+                            <input type="text" class="form-control" id="name2" readonly>
                         </div>
                         <div class="mb-3">
                             <label for="area2" class="form-label">Area</label>
-                            <input type="text" class="form-control" id="area2">
+                            <input type="text" class="form-control" id="area2" readonly>
                         </div>
                         <div class="mb-3">
                             <label for="population2" class="form-label">Population</label>
-                            <input type="text" class="form-control" id="population2">
+                            <input type="text" class="form-control" id="population2" readonly>
                         </div>
                         <div class="mb-3">
                             <label for="gdp2" class="form-label">GDP</label>
-                            <input type="text" class="form-control" id="gdp2">
+                            <input type="text" class="form-control" id="gdp2" readonly>
                         </div>
                         <div class="mb-3">
                             <label for="des3" class="form-label">Description</label>
-                            <input type="text" class="form-control" id="des3">
+                            <input type="text" class="form-control" id="des3" readonly>
                         </div>
                         <div class="mb-3">
                             <label for="listNation3" class="form-label">Nation</label>
-                            <select  id="listNation3" class="form-control"></select>                             
+                            <input type="text" id="listNation3" class="form-control" readonly>
+                                                   
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>                          
@@ -55,17 +56,17 @@ function showDetail(id) {
                     </form>
                 </div>`
     $("#showDetail").html(content)
-    showListCity();
+    showListNation();
     $.ajax({
         type: "GET",
         url:`http://localhost:8080/city/${id}`,
         success: function (data) {
-            $(`#name1`).val(data.name)
-            $(`#area1`).val(data.area)
-            $(`#population1`).val(data.population)
-            $(`#gdp1`).val(data.gdp1)
-            $(`#des1`).val(data.describe1)
-            $(`#listNation`).val(data.nation.id)
+            $(`#name2`).val(data.name)
+            $(`#area2`).val(data.area)
+            $(`#population2`).val(data.population)
+            $(`#gdp2`).val(data.gdp1)
+            $(`#des3`).val(data.describe1)
+            $(`#listNation3`).val(data.nation.name)
         }
     })
 }
@@ -247,23 +248,10 @@ function createCity() {
         data: JSON.stringify(city),
         url: `http://localhost:8080/city`,
         success: showListCity
-
     })
     event.preventDefault();
 }
 
-function viewDetail(id) {
-    $.ajax({
-        type: "GET",
-        url: `http://localhost:8080/city/${id}`,
-        success: function (data) {
-            let content = ``
-        }
 
-
-    })
-
-
-}
 
 
